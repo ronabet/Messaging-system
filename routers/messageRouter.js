@@ -2,12 +2,14 @@ const express = require('express');
 const router = express.Router();
 const messageController = require('../controllers/messageController');
 const wrapAsync = require('../utils/wrapController');
+const messageValidator = require('../validator/inputValidations');
 
 
-router.post('/', wrapAsync(messageController.sendMessage));
-router.get('/:userId', wrapAsync(messageController.getMessagesByUser));
-router.get('/unread/:userId', wrapAsync(messageController.getAllUnreadMessages));
+router.post('/', (req, res, next) => messageValidator.checkReceiverAndSender(req, res, next), wrapAsync(messageController.sendMessage));
+router.get('/', wrapAsync(messageController.getMessagesByUser));
+router.get('/unread/', wrapAsync(messageController.getAllUnreadMessages));
+router.delete('/', wrapAsync(messageController.deleteMessage));
 
 
-module.exports = router
+module.exports = router;
 

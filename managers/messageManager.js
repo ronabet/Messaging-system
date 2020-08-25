@@ -18,6 +18,12 @@ exports.getAllUnreadMessages = (userId) => {
     return messageModel.find({ $and: [ { receiver : userId }, { read : false }]}).exec();
 }
 
+exports.deleteMessage = (messageId) => {
+    return messageModel.deleteOne({ _id: messageId }, (err) => {
+        if(err) throw err;
+    })
+}
+
 // const checkIfUserExists = (userID) => {
 //     return userManager.getUserById(userID) ? true : false;
 // }
