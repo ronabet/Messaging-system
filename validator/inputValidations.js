@@ -1,52 +1,23 @@
 const mongoose = require("mongoose");
 var exports = module.exports;
 
-exports.checkReceiverAndSender = (req , res, next) => {
+exports.checkReceiverAndSender = (req, res, next) => {
   if (!checkIDIsValid(req.body.sender) || !checkIDIsValid(req.body.receiver)) {
     return res.json({ error: "Sender or receiver ID invalid" });
   }
   next();
-}
+};
+
+exports.checkOneIdValid = (id, res, next) => {
+  if (!checkIDIsValid(id)) {
+    return res.json({ error: "ID invalid" });
+  }
+  return next();
+};
 
 const checkIDIsValid = (Id) => {
   return mongoose.Types.ObjectId.isValid(Id);
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // const defaultValidationOptions = {
 //   abortEarly: false,

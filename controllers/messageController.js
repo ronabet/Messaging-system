@@ -1,6 +1,5 @@
 const messageManager = require("../managers/messageManager");
 const userManager = require("../managers/userManager");
-const mongoose = require("mongoose");
 var exports = module.exports;
 
 exports.sendMessage = async (req, res) => {
@@ -18,7 +17,6 @@ exports.sendMessage = async (req, res) => {
   return res.json(await messageManager.sendMessage(req.body));
 };
 
-
 exports.getMessagesByUser = async (req, res) => {
   const userId = req.query.userId;
   return (await messageManager.getMessagesByUser(userId)).length >= 1
@@ -34,19 +32,23 @@ exports.getAllUnreadMessages = async (req, res) => {
 };
 
 exports.deleteMessage = async (req, res) => {
+  //Todo: fix
   const messageId = req.query.messageId;
   try {
     return res.json(await messageManager.deleteMessage(messageId));
   } catch (err) {
-    return res.json({ error: "haha" });
+    return res.json({ error: "Error in find Id" });
   }
 };
 
-// const checkMessages = async (managerFunction, userId, res) => {
-//     if((managerFunction(userId).length).length > 1){
-//         return true;
-//     }
-//     else{
-//         return false;
-//     }
-// }
+exports.readMessage = async (req, res) => {
+  const messageId = req.query.messageId;
+  try {
+    if ((await messageManager.readingMessage(messageId)) === null) {
+      return res.json({ error: "Not found message" });
+    }
+    return res.json(await messageManager.readingMessage(messageId));
+  } catch (err) {
+    return res.json({ error: "Error in find message" });
+  }
+};
