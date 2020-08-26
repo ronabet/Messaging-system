@@ -1,11 +1,13 @@
 const mongoose = require("mongoose");
 var exports = module.exports;
+const { body, validationResult } = require('express-validator');
+
 
 exports.checkReceiverAndSender = (req, res, next) => {
   if (!checkIDIsValid(req.body.sender) || !checkIDIsValid(req.body.receiver)) {
     return res.json({ error: "Sender or receiver ID invalid" });
   }
-  next();
+  return next();
 };
 
 exports.checkOneIdValid = (id, res, next) => {
@@ -15,38 +17,19 @@ exports.checkOneIdValid = (id, res, next) => {
   return next();
 };
 
-const checkIDIsValid = (Id) => {
-  return mongoose.Types.ObjectId.isValid(Id);
+const checkIDIsValid = (id) => {
+  return mongoose.Types.ObjectId.isValid(id);
 };
 
-// const defaultValidationOptions = {
-//   abortEarly: false,
-//   allowUnknown: false,
-//   convert: true,
-// };
+exports.validateBodyArray = () => {
+  return [ body('message').exists().notEmpty(), body('subject').exists().notEmpty() ];
+}
 
-// const normalizeRequest = (req, value) => {
-//   req.originalBody = req.body;
-//   req.body = value.body;
-
-//   req.originalQuery = req.query;
-//   req.query = value.query;
-
-//   req.originalParams = req.params;
-//   req.params = value.params;
-// };
-
-// const ValidateRequest = (schema, options = defaultValidationOptions) => {
-//   const validator = async (req) => {
-//       const { error, value } = schema.unknown().validate(req, options);
-//       if (error) {
-//           throw error;
-//       }
-
-//       if (options.convert) {
-//           normalizeRequest(req, value);
-//       }
-//   };
-
-//   return wrapValidator(validator);
-// };
+exports.validateBodyMiddleWare = (req, res, next) => {
+  const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    } else {
+        return next();
+    }
+}

@@ -13,5 +13,5 @@ const messageSchema = new Schema({
 
 const Message = mongoose.model('Message', messageSchema);
 
-// make this available to our users in our Node applications
+// make this available to our Node application
 module.exports = Message;

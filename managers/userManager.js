@@ -1,19 +1,18 @@
 const userModel = require("../models/userSchema");
-var exports = module.exports;
 
-exports.getAllUsers = () => {
+module.exports.getAllUsers = () => {
   return userModel.find({}).exec();
 };
 
-exports.createUser = (userBody) => {
+module.exports.createUser = (userBody) => {
   const newUser = { ...userBody };
   return userModel.create(newUser);
 };
 
-exports.getUserById = (query) => {
+module.exports.getUserById = (query) => {
   return userModel.findOne({ _id: query }).exec();
 };
 
-exports.get = async (query) => {
+module.exports.get = async (query) => {
   return userModel.exists({ _id: query });
 };
