@@ -5,7 +5,8 @@ const { route } = require("./routers/messageRouter");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.send("Welcome for messaging service server!");
+  res.send(
+    "Welcome for messaging service server! " + '\n' + "Documentation: https://documenter.getpostman.com/view/8307699/TVCZaBN3");
 });
 router.use("/api/users", userRouter);
 router.use("/api/messages", messageRouter);
