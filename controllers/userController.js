@@ -10,7 +10,7 @@ module.exports.createUser = async(req, res) => {
 
 module.exports.getUserById = async(req, res) => {
     try{
-        res.json(await userManager.getUserById(req.params.id));
+        return res.json(await userManager.getUserById(req.params.id));
     }
     catch(err){
         res.json({ error: "Can`t find this ID :(" })

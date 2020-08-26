@@ -18,23 +18,25 @@ module.exports.sendMessage = async (req, res) => {
 
 module.exports.getMessagesByUser = async (req, res) => {
   const userId = req.query.userId;
-  return (await messageManager.getMessagesByUser(userId)).length >= 1
-    ? res.json(await messageManager.getMessagesByUser(userId))
+  let result = await messageManager.getMessagesByUser(userId);
+  return result.length >= 1
+    ? res.json(result)
     : res.json({ message: "No Messages to display!" });
 };
 
 
 module.exports.getAllUnreadMessages = async (req, res) => {
   const userId = req.query.userId;
-  return (await messageManager.getAllUnreadMessages(userId)).length >= 1
-    ? res.json(await messageManager.getAllUnreadMessages(userId))
+  let result = await messageManager.getAllUnreadMessages(userId);
+  return result.length >= 1
+    ? res.json(result)
     : res.json({ message: "No Messages to display!" });
 };
 
 module.exports.deleteMessage = async (req, res) => {
   const messageId = req.query.messageId;
   const userId = req.query.userId;
-  let result =  await messageManager.deleteMessage(messageId, userId);
+  let result = await messageManager.deleteMessage(messageId, userId);
   if(result){
     return res.json(result);
   }else{
@@ -44,11 +46,12 @@ module.exports.deleteMessage = async (req, res) => {
 
 module.exports.readMessage = async (req, res) => {
   const messageId = req.query.messageId;
+  let result = await messageManager.readingMessage(messageId);
   try {
-    if ((await messageManager.readingMessage(messageId)) === null) {
+    if (result === null) {
       return res.json({ error: "Message not found" });
     }
-    return res.json(await messageManager.readingMessage(messageId));
+    return res.json(result);
   } catch (err) {
     return res.json({ error: "Message not found" });
   }
