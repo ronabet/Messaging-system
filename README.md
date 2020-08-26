@@ -9,7 +9,7 @@ npm i
 ```
 
 ## Run The Service
-Use NodeJs to run the backend.
+Use NodeJs to run the service.
 ```bash
 npm start
 ```
