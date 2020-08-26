@@ -15,4 +15,4 @@ npm start
 ```
 
 ## Postman Requests Documentation
-[website]: https://documenter.getpostman.com/view/8307699/TVCZaBN3
+https://documenter.getpostman.com/view/8307699/TVCZaBN3
