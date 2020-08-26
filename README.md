@@ -1,4 +1,4 @@
-# Messaging system
+# Messaging service
 
 ## Dependencies Installation
 
@@ -8,7 +8,7 @@ First install NodeJs, Use the node package manager NPM to install all required p
 npm i
 ```
 
-## Run The Backend
+## Run The Service
 Use NodeJs to run the backend.
 ```bash
 npm start
