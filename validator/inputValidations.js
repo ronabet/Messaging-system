@@ -14,7 +14,9 @@ exports.checkOneIdValid = (id, res, next) => {
   if (!checkIDIsValid(id)) {
     return res.json({ error: "ID invalid" });
   }
-  return next();
+  else{
+    return next();
+  }
 };
 
 const checkIDIsValid = (id) => {

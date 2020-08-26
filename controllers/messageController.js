@@ -15,12 +15,14 @@ module.exports.sendMessage = async (req, res) => {
     : res.json(await messageManager.sendMessage(req.body));
 };
 
+
 module.exports.getMessagesByUser = async (req, res) => {
   const userId = req.query.userId;
   return (await messageManager.getMessagesByUser(userId)).length >= 1
     ? res.json(await messageManager.getMessagesByUser(userId))
     : res.json({ message: "No Messages to display!" });
 };
+
 
 module.exports.getAllUnreadMessages = async (req, res) => {
   const userId = req.query.userId;
@@ -32,13 +34,11 @@ module.exports.getAllUnreadMessages = async (req, res) => {
 module.exports.deleteMessage = async (req, res) => {
   const messageId = req.query.messageId;
   const userId = req.query.userId;
-  try {
-    if ((await messageManager.deleteMessage(messageId, userId)) === null) {
-      return res.json({ error: "Message not found" });
-    }
-    return res.json(await messageManager.deleteMessage(messageId, userId));
-  } catch (err) {
-    return res.json({ error: "Message id not found" });
+  let result =  await messageManager.deleteMessage(messageId, userId);
+  if(result){
+    return res.json(result);
+  }else{
+    return res.json({ error: "Message id not found" });  
   }
 };
 

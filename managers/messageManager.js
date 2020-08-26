@@ -21,7 +21,7 @@ module.exports.getAllUnreadMessages = (userId) => {
 };
 
 module.exports.deleteMessage = (messageId, userId) => {
-  return messageModel.findOneAndDelete( { _id: messageId }, { $or: [{ sender: userId }, { receiver: userId }] }).exec();
+  return messageModel.findOneAndDelete( { _id: messageId }, { $or: [{ sender: userId }, { receiver: userId }] });
 };
 
 module.exports.readingMessage = (messageId) => {
